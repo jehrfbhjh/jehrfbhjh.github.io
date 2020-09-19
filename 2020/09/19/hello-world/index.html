@@ -94,7 +94,7 @@
 	            <a href="#s1">分类</a>
 	                    <ul class="submenu">
 	                        <li>
-	                        
+	                        <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li><a class="category-link" href="/categories/%E5%BF%83%E6%83%85/">心情</a>
 	                    </ul>
 	        </li>
 	        
@@ -149,315 +149,44 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://pic4.zhimg.com/v2-d04ddee87a3e49c219f7fd46b0c05962_1440w.jpg?source=172ae18b);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
                 <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >知识蒸馏</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <p>这是一篇关于【知识蒸馏】简述的文章，目的是想对自己对于知识蒸馏学习的内容和问题进行总结。笔者挑选了部分经典的paper详读，希望对于对KD有需求的同学提供一个概览和帮助。</p>
-<p>整理：深度传送门</p>
-<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a><strong>引子</strong></h2><p>昆虫记里写道：”蝴蝶以毛毛虫的形式吃树叶积攒能量逐渐成长，最后变换成蝴蝶这一终极形态来完成繁殖 ” 。 虽然蝴蝶和毛毛虫两者本质是同一种生物，但是面对不同环境和任务的时候，形态不同——毛毛虫形态下可以更方便地吃树叶，保护自己，积蓄能量；而蝴蝶能飞，可以扩大活动范围，提高繁殖几率。</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203501_621.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图1，毛毛虫变成蝴蝶</p>
-<p>在监督学习里也是这样的，在训练模型时， 我们通常采用复杂模型或者Ensemble方式来获取最好的结果，导致参数冗余严重 ，像BERT里有3亿参数。因此在前向预测时，需要对模型进行复杂的计算（或多个模型加权），导致工程性能较差。</p>
-<p>Hinton在NIPS 2014workshop中提出 <strong>知识蒸馏</strong> （Knowledge Distillation，下面简称KD）概念：</p>
-<p>把复杂模型或者多个模型Ensemble（Teacher）学到的知识 迁移到另一个轻量级模型（ Student ）上叫 知识蒸馏。 使模型变轻量的同时（方便部署），尽量不损失性能。</p>
-<p>从定义上来看KD属于模型压缩、加速的一类玩法。（后面的研究也会将KD应用于模型表现的提升）。在这里， <strong>知识应该宽泛和抽象地理解</strong> ，模型参数，网络层的输出（网络提取的特征）、网络输出等都可以理解为知识。</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203501_338.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图2，Knowledge in KD</p>
-<p>Overview &amp; Timeline</p>
-<p>按照待迁移的知识类型，KD主要分为三个大类：</p>
-<ul>
-<li>Output Transfer——将网络的输出（Soft-target，后面会介绍其含义）作为知识；</li>
-<li>Feature Transfer——将网络学习的特征作为知识；</li>
-<li>Relation Transfer——将网络或者样本的关系作为知识；</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_263.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图3，知识蒸馏分类——从迁移知识类别的角度</p>
-<p>从时间线上来看，KD的发展脉络大致如下（部分论文）：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_344.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图4，Timeline of KD</p>
-<p>在第二part中，对于Paper内容的概述也将大概按照KD的类别分别展开。</p>
-<h2 id="Papers"><a href="#Papers" class="headerlink" title="Papers"></a><strong>Papers</strong></h2><p>2-1 Output Transfer</p>
-<p>Output Transfer——将网络的输出（Soft-target，后面会介绍其含义）作为知识。在该部分，将主要介绍以下几篇paper。</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_682.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图5，输出迁移paper</p>
-<p>2-1-1 《Distilling the Knowledge in a Neural Network 》</p>
-<p>【Meta info】Hinton，NIPS 2014 workshop，Cites：2400</p>
-<p>这篇paper是知识蒸馏的开山之作，由Hinton老爷子在NIPS 2014 workshop上提出，文章的思路非常简单、优雅。 首先，我们对一些术语进行定义：</p>
-<ul>
-<li>Teacher：原始较大的模型或模型Ensemble，用于获取知识</li>
-<li>Student：新的较小的模型，接收teacher的知识，训练后用于前向预测</li>
-<li>Hard target：样本原本的标签，One-hot</li>
-<li>Soft target ：Teacher输出的预测结果（一般是softmax之后的概率）</li>
-</ul>
-<p>接下来，进入正题，介绍蒸馏的过程：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_337.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图6，知识蒸馏过程图示</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_206.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图7，经典知识蒸馏过程</p>
-<p>从模型效果上来看：</p>
-<ul>
-<li>【Mnist】</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203502_551.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图8，Mnist蒸馏结果对比</p>
-<p>Teacher网络模型复杂，参数多，表征能力强，使用Hard Target作为训练目标，并且从直觉上来看，效果应该是好的（参数多），最终在测试集上错了67个。</p>
-<p>Student网络模型简单，参数少，表征能力弱，在直接使用Hard target 作为训练目标时（不使用知识蒸馏），在测试集上错了146；使用Hard target + Soft target作为训练目标时，错了74个。</p>
-<p>可以看出，加入了Soft target后，小网络从大网络中继承了大网络中学习的“知识”，但是这个实验中，最好的结果没有超过baseline。</p>
-<ul>
-<li>【一个语音数据集】</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203503_698.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>Teacher（baseline）网络准确率58.9%，10个Teacher集成的准确率为61.1%，而神奇的是，Student网络（简单模型蒸馏Ensemble网络）的效果居然超过了Teacher网络！</p>
-<p>我们考虑下起主要效果的因子：</p>
-<p>以Mnist数据集为例，对于数字9而言，数字9与数字4和7长得比较像。网络在进行训练时，我们如果能够将数字之间的相似关系传递给模型，则网络可能学习到更好的结果。</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203503_710.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图9，Mnist数据集</p>
-<p>而对于Hard target和Soft target，</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203503_971.png" alt="一文总览知识蒸馏概述"></p>
-<p>图10，Hard target和Soft target对比</p>
-<p>我们可以看出，软目标的优势在于：</p>
-<ul>
-<li>弥补了简单分类中监督信号不足（信息熵比较少）的问题，增加了信息量；</li>
-<li>提供了训练数据中类别之间的关系（数据增强）；</li>
-<li>可能增强了模型泛化能力。</li>
-</ul>
-<p>What’s more，关于软目标相关的思考，还有Label smoothing Regularization(LSR)，即“标签平滑归一化”。LSR也是对“硬目标”的优化：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203503_368.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图11，LSR算法</p>
-<p>具体推导可以参考</p>
-<p>Müller R, Kornblith S, Hinton G. When Does Label Smoothing Help?[J]. arXiv preprint arXiv:1906.02629, 2019.</p>
-<p>在经典的蒸馏网络中，参数T是一个超参数——温度。T表示软目标要soft的程度：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203503_589.png" alt="一文总览知识蒸馏概述"></p>
-<ul>
-<li>T = 1，公式同softmax输出后的结果；</li>
-<li>T越接近0，公式越同One-hot编码，最大值趋向于1，最小值趋向于0；</li>
-<li>提升T，则保留更多类别关系信息。</li>
-</ul>
-<p>2-1-2 《Distilling Task-Specific Knowledge from BERT into Simple Neural Networks》</p>
-<p>【Meta info】：2019， Cites：12</p>
-<p>本文是对Bert网络进行蒸馏，其思想与经典蒸馏网络并无区别。</p>
-<p>【背景】：</p>
-<ul>
-<li>18年底，Bert在很多NLP任务上取得了STOA，但线上运算时，算力是“瓶颈”, 使用单核B70 CPU，Seq length=128时，QPS只有几十</li>
-<li>KD在NLP应用较少</li>
-<li>本文希望用Bi-LSTM网络蒸馏Bert网络</li>
-</ul>
-<p>【网络Loss】：同经典KD，Loss分为两部分：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_381.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_98.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图12，Bi-LSTM蒸馏Bert</p>
-<p>【效果】：可以看出蒸馏的结果弱于Bert但是比原始的双向LSTM效果好很多。</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_402.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>2-1-3 《Deep Mutual Learning》</p>
-<p>【Meta info】：CVPR 2018，Cites：409</p>
-<p>【背景】：</p>
-<ul>
-<li>在经典的蒸馏过程中，teacher网络固定，只用来输出soft-target，难以学习student网络中反馈的信息，进而对训练过程进行优化</li>
-<li>本文提出深度互学习，多个学生网络同时训练，通过真值和多个网络的输出结果“相互借鉴，共同进步”</li>
-<li>本文不已模型压缩为主要目的，更多为了提升模型表现</li>
-</ul>
-<p>【网络结构】（以两个网络为例）：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_721.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图13，DML网络结构</p>
-<p>【网络Loss】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_573.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>思路比较简单，Lc1是经典的交叉熵，Dkl是KL散度。</p>
-<p>【实施】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_852.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图14，DML训练过程</p>
-<p>当存在多个子网络时：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203504_14.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>【效果】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_210.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>可以看出，在DML思路下，网络效果比单个网络有了明显的提升；效果比经典的蒸馏网络也提升较大。</p>
-<p>【有效因子】：</p>
-<ul>
-<li>类别概率中包含了更多信息（同经典KD）</li>
-<li>深度互学习的方法可能找到了更平缓的极值点（意味着泛化能力更强，小的波动不会对预测产生较大的影响），如下图所示，DML网络的Loss和单独训练网络Loss接近，但是，当对参数添加噪声时，DML的Loss小于单独训练的Loss（当网络输出对于输入噪声的敏感程度比较差的时候，可以认为网络输出处于一个比较平缓的局部最优点）。</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_733.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图15，DML与单独网络Loss</p>
-<p>【2-1-4】《Born Again Neural Networks》再生网络</p>
-<p>【Meta info】：CVPR 2018，Cites：409</p>
-<p>【思路】：</p>
-<ul>
-<li>再生网络也不已模型压缩为主要目的，更多为了提升模型表现</li>
-<li>再生网络基于蒸馏的理念，提供了一种Esemble的思路</li>
-<li>教师、学生网络结构相同，第n个学生目标训练第n+1个学生，“口口相传”</li>
-<li>最后进行集成</li>
-</ul>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_695.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图16，再生网络</p>
-<p>【效果】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_288.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>2-2 Feature Transfer</p>
-<p>Feature Transfer——将网络学习的特征作为知识。在深度学习中，一般将隐藏层的输出看作是网络学习的特征，下面两篇paper中：第一篇paper以MLP为基础框架，则网络提取的特征为每个隐藏层的输出向量；第二篇paper以CNN为基础框架，则网络提出的特征为每层的Feature Map。</p>
-<p>图1，特征迁移</p>
-<p>2-2-1 《FitNets: Hints for Thin Deep Nets》</p>
-<p>【Meta info】：ICLR 2015，Cites: 780</p>
-<p>[背景]：</p>
-<ul>
-<li>Deep可能是DNN主要的拟合能力的重要来源，之前的KD工作都是用较浅的网络作为student net，拟合能力可能较弱</li>
-<li>这篇文章把“宽”且“深”的网络蒸馏成“瘦”且“更深”的网络</li>
-</ul>
-<p>[思路]：</p>
-<ul>
-<li>学生网络不仅仅拟合教师网络的soft-target，而且拟合隐藏层的输出（教师抽取的特征）；</li>
-<li>第一阶段让学生网络去学习教师网络的隐藏层输出（特征迁移）；</li>
-<li>第二阶段使用soft targets来训练学生网络（输出迁移）。</li>
-</ul>
-<p>【网络结构】:</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_958.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图2，FitNet网络结构</p>
-<p>【实施】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_189.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>2-2-2 《Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer》</p>
-<p>【Meta info】：ICLR 2017， Cites: 222</p>
-<p>【思路】：</p>
-<ul>
-<li>思路一：对卷积网络隐藏层输出的特征图——feature map（特征 &amp; 知识）进行迁移（Attention transfer），让学生网络的feature map与教师网络的feature map尽可能相似</li>
-<li>思路二：Loss对输入X求导，得到梯度更大的像素点，表明”更重要”，需要pay more attention</li>
-<li>该特征迁移的方法也可以与soft-target的方式结合</li>
-</ul>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_387.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图3，《Paying More Attention to Attention》网络结构</p>
-<p>【思路1——Actication-based attention transfer】：</p>
-<ul>
-<li>对卷积网络隐藏层输出的特征图——feature map（特征 &amp; 知识）进行迁移（Attention transfer），让学生网络的feature map与教师网络的feature map尽可能相似；</li>
-<li>该特征迁移的方法也可以与soft-target的方式结合。</li>
-</ul>
-<p>【实施】：</p>
-<ul>
-<li>首先将Teacher网络和Student网络都分成n个part（两者分part的数量相同），每个part内包含几个卷积核池化层都是可以的，不过为了提升预估的效率，一般学生网络每个part的网络结构比教师网络简单。同时，保证学生网络和教师网络每个part的最后一个卷积层得到的feature map的size大小相同，都是W * H（数量可以不同）；</li>
-<li>接下来，为了计算loss，每个part的最后一个卷积层C个W * H的特征图变换为1个W* H的的二维张量，原文提供了以下三种方式（比较简单可以回原paper详读）：<ul>
-<li>特征图张量各通道绝对值相加；</li>
-<li>特征图张量各通道绝对值p次幂相加；</li>
-<li>取特征图张量各通道绝对值p次幂最大值</li>
-</ul>
+                <p>作为模型压缩和加速的经典方法之一，知识蒸馏(Knowledge Distillation)是不得不了解的一个领域。14年NIPS上由Google 的Hinton发表的《[Distilling the Knowledge in a Neural Network](<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a>)》是首次提出知识蒸馏这个概念的文章，本文对这个文章做一个初步理解。</p>
+<p><strong>知识蒸馏的基本思路</strong></p>
+<p>一般来讲，越是复杂的网络，参数越多，计算量越大，其性能越好；越是小的网络，越难训练到大网络那么好的性能。或者用一些大的模型来做集成学习（例如最简单地投票）来提升整体性能。</p>
+<p>提升性能和落地部署不要用相同的模型</p>
+<p>在工作中，一般常见的开发范式是，以一个大模型结构，在很大的数据上，训练出一个性能很好的模型，然后在部署阶段，也部署这个模型以预测实际情况下的数据。作者这里认为，部署用的模型和训练提高性能用的模型，其实应用场合不一样，<strong>用一样的模型是不对的</strong>！应该用不一样的模型（训练用复杂大模型，目标为提高性能；而部署用小模型，目标是为了速度和节约资源），就好像很多昆虫有专门为了从环境中提取能量和营养的幼体形态和专门为了迁徙和繁殖的成虫形态一样，我们也应该用大模型来学习抽取大规模，强冗余的训练集信息，然后利用新的训练方法（这里称之为<strong>蒸馏</strong>）把大模型学到的知识转移到一个更适合部署的小模型上。</p>
+<p>大模型的Softmax输出概率里面富含知识</p>
+<p>这里有一个在概念上的认识障碍，就是我们通常认为模型学到的知识是体现在它学习到的具体的参数中的，而这些参数我们又很难轻易精简。我们可以从更上一层的概念想一下，其实我们学到的知识，<strong>是一个函数，它把样本的输入向量映射到输出向量</strong>。例如，我们的VGG模型，就是把输入的224x224x3的图片向量映射成1000维的输出的每类概率向量。而在训练VGG的过程中，我们会最大化真值那一类的概率。但是，我们模型输出的结果，还有个另外的作用，就是为不是真值的那些类也赋予了一定的概率，虽然这些概率一般比较小，但是也有些是比其他的大一些的，<strong>这相对大小里面也包含了很多大模型学习到的信息</strong>！比如，输入给训练好的VGG模型一个宝马轿车图片，虽然只有很小的概率会被分类为垃圾车，但是这个概率怎么来说也会比VGG将其分类成一个胡萝卜的概率大许多倍吧，这里这些错误分类的概率里面，其实也包含了大模型VGG是怎么分类的大量的有用信息的。</p>
+<p>我们要学的不是真值标签！要学的其实是泛化能力！</p>
+<p>我们训练模型的目标函数越能反应真实场景下用户所要达到的目标越好。用户的目标是模型的泛化能力好，对未见过的样本要正确分类。然而由于条件所限，我们一般把提升模型的泛化能力这个目标简化为训练模型在训练集上对真值标签的预测能力，我们也认为，训练得到的模型对真值标签的预测能力越强，它的泛化能力也应该越强，这也是很合理的。但是，<strong>如果我们已经有了一个泛化能力很强的模型，那么为什么不去用一个小模型直接学习这个很强的模型的泛化能力呢</strong>？那不是舍本逐末吗？</p>
+<p>怎么学习泛化能力呢？知识蒸馏！</p>
+<p>那么问题来了。如果我们有了一个大模型，泛化能力很好，我们怎么才能让一个小模型去学习它的泛化能力呢？换句话说，怎么让大模型的泛化能力转移到小模型身上去呢？这里就用到了论文里面介绍的方法：知识蒸馏。</p>
+<p>简单地说，知识蒸馏就是把大模型对样本输出的概率向量作为软目标“soft targets”，去让小模型的输出尽量去和这个软目标靠（原来是和One-hot编码上靠）。知识蒸馏过程所用的训练样本可以和训练大模型用的训练样本一样，或者另找一个独立的Transfer集也行。<strong>因为“soft targets”比One-hot编码所携带的信息更多</strong>，所以我们在<strong>训练小模型时可以用比训练大模型时更少的训练集和更大的学习率</strong>。</p>
+<p>当“soft targets”携带信息太少怎么办？用高温T煮出来！</p>
+<p>想象有一种情况，比如对于类似于MNIST这样的简单任务来说，大模型表现地很好，它输出的soft targets几乎和真值的One-hot编码一样（真值那一位有一个巨接近1.0的概率，其余各位概率都很小），大多数的关于大模型泛化能力的信息都集中在那些值很小的概率上。比如，某个2的测试图像，输出它是3的概率为10^-6，是7的概率为10^-9，而另外一个2的测试图像，输出它是3的概率为10^-9而是7的概率为10^-6。很显然，这些很小的概率（10^-6和10^-9）体现了两个测试图上2的写法和3更像还是和7更像，它们是携带了很重要的信息的。但是在Transfer阶段计算交叉熵的时候，由于它们的值很小，他们对于Transfer阶段的目标函数的影响很小，这是不应该的！怎么样解决这个问题呢？怎么样放大这些小概率值里面所携带的信息呢？<a href="%5Bhttps://www.cs.cornell.edu/~caruana/compression.kdd06.pdf%5D(https://link.zhihu.com/?target=https://www.cs.cornell.edu/~caruana/compression.kdd06.pdf)">Caruana</a>所采取的方法是用logits（Softmax的输入）作为学习的“Soft targets”（而不是前面Hinton说的Softmax的输出），然后计算大模型的logits和小模型的logits的均方差来优化小模型。而我们本文说的Hinton，用了一种更通用的称之为蒸馏的办法，<strong>引入温度参数T去放大（蒸馏出来）这些小概率值所携带的信息</strong>。后文我们会证明，Caruana教授的方法只是Hinton大牛方法的一个特例。</p>
+<p><strong>关于训练集</strong></p>
+<p>用来做知识蒸馏训练小模型的训练集合可以是无标签的数据，也可以是最初用来训练大模型的数据（反正我们要学的是模型的泛化能力，知道模型的输入输出就行了）。不过，在实际做知识蒸馏的时候，如果<strong>有最初训练大模型的带标签的训练集训练效果会更好</strong>，这时我们可以在训练小模型的目标函数里面加入让小模型也预测出训练样本标签的目标函数（原始目标函数是让小模型预测出大模型的输出Soft target）。而且，有时候小模型直接去学习输出Soft target有难度，加上让它去学习样本真值的损失，去诱导小模型的输出往样本真值上靠也会对学习Soft target有帮助作用。</p>
+<p><img src="https://picb.zhimg.com/80/v2-0191aaee35986af34e09adecb5ed1807_1440w.jpg" alt="img"></p>
+<p>如上图所示为怎么做知识蒸馏的示意图。左边和中间的图为训练过程，右边的图为预测过程。</p>
+<p>首先第一步，肯定是训练一个大的模型，让它在训练集上性能良好（有一个好的大模型是知识蒸馏的前提）；</p>
+<p>然后是用这个大模型来训练小模型。在训练时，对样本xl，大模型的倒数第二层先除以一个温度T，然后通过Softmax预测一个软目标Soft target，小模型也一样，倒数第二层除以同样的温度T，然后通过Softmax预测一个结果，再把这个结果和软目标的交叉熵作为训练的total loss的一部分。训练的total loss的另一部分是正常的输出和真值标签(hard target)的交叉熵。Total loss把这两个损失<strong>加权</strong>合起来做为训练小模型的最终的loss。在小模型训练好了，预测的时候，就不需要再有温度T了，直接按照常规的Softmax输出就可以了。</p>
+<p>这里的温度T是干什么的，前面已经提到了，就是引入温度T去放大小概率所携带的信息。可以用下面这个图来解释：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-61827e54f6a0259539952c57d7b904ff_1440w.jpg" alt="img"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-eda69ac444515579e2f7a54273b881d7_1440w.jpg" alt="img"></p>
+<p>上面第二张图中的公式是怎么由倒数第二层的zi产生软目标qi，上面第一张图是在不同的温度T的取值下，各个横轴的zi得到的纵轴的qi的变化规律。可以看出有连个值得关注的点：</p>
+<ol>
+<li><p>当温度T越高的时候，软目标越平滑，信息不会集中在少数分量上，这样增大温度参数T相当于放大（蒸馏出来）这些小概率值分量所携带的信息；</p>
 </li>
-<li>然后，计算教师网络和学生网络的特征图差异，并使其变小。</li>
-</ul>
-<p>【网络Loss】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203505_718.jpg" alt="一文总览知识蒸馏概述"></p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203506_757.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>【思路2——Gradient-based attention transfer】：</p>
-<p>Loss对输入X求导， 判断损失函数对于输入X的敏感性，pay more attnetion to值得注意的像素（梯度大的像素）</p>
-<p>【网络Loss】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203506_57.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>2-3 Relation Transfer</p>
-<p>Relation Transfer——将网络或者样本的关系作为知识。该部分将主要介绍以下一篇paper：</p>
-<p>图5，关系迁移</p>
-<p>2-3-1 《A Gift from Knowledge Distillation: Fast Optimization, Network Minimization and Transfer Learning》</p>
-<p>【Meta info】：CVPR 2017，Cites: 144</p>
-<p>【思路】：学生网络学习教师网络层与层之间的关系（特征关系），“授之以渔”。</p>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203506_497.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图6，FSP matrix网络结构</p>
-<p>【实施】：</p>
-<ul>
-<li>首先将Teacher网络和Student网络都分成n个part（两者分part的数量相同），每个part内包含几个卷积核池化层都是可以的，不过为了提升预估的效率，一般学生网络每个part的网络结构比教师网络简单。同时，保证学生网络和教师网络每个part的最后一个卷积层feature map的数量与下一个part第一个卷积层feature map的数量的数量相等；</li>
-<li>定义”FSP matrix“用于衡量两层特征之间的关系，用前一层的特征图与下一层的特征图element-wise相乘并求和：</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203506_364.jpg" alt="一文总览知识蒸馏概述"></p>
-<ul>
-<li>该步骤计算完毕后，可以得到一个m * n的 FSP matrix；</li>
-<li>网络被分为了n个part，可以获取n-1个FSP matrix（上图中，分为了3个part，可以获取两个FSP matrix）；</li>
-<li>训练分为两个阶段：<ul>
-<li>第一个阶段，用FSP预训练学生网络的参数；</li>
-<li>第二个阶段，用正常的分类loss优化学生网络。</li>
-</ul>
+<li><p>第二点，不管温度T怎么取值，Soft target都有忽略小的zi携带的信息的倾向（产生的Prob小）</p>
 </li>
-</ul>
-<p>【效果】：</p>
-<p>在多个数据集上学生网络在参数减少很多的情况下，效果接近教师网络，且优于FitNets</p>
-<p>2-4 Others</p>
-<p>该部分将主要介绍以下的paper：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203507_876.png" alt="一文总览知识蒸馏概述"></p>
-<p>图8，其他paper</p>
-<p>2-4-1 《KDGAN: Knowledge Distillation with Generative Adversarial Networks》</p>
-<p>【Meta info】：NIPS 2018, Cites: 15</p>
-<p>【背景】：</p>
-<ul>
-<li>原始蒸馏网络中，学生网络难以学习到教师网络的所有“知识”，效果可能略差于教师网络</li>
-<li>用对抗生成的方式模拟蒸馏的过程：生成器（学生网络，参数少、简单）负责基于输入X输出X的标签Y，判别器（教师网络，参数多、复杂）判断标签来自于学生网络还是真实的数据</li>
-<li>前向计算时，只使用生成器，实现蒸馏的目的</li>
-</ul>
-<p>【GAN】回顾：</p>
-<ul>
-<li>GAN常用于图像生成：</li>
-<li>经典GAN中，生成器G基于随机噪声生成图像；判别器D是一个分类器，判断图像是真实图像还是生成的。</li>
-<li>最大-最小迭代训练：<ul>
-<li>固定G，用G的生成结果和真实数据优化D，使得V（D，G）尽可能大；</li>
-<li>固定D，基于D的结果优化G，使得V（D，G）尽可能小；</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203507_453.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>KDGAN里作者提出了两种网络：NaGAN，KDGAN</p>
-<p>思路1： <strong>【NaGAN】</strong></p>
-<p>【网络结构】（红框部分）：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203507_75.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图9，NaGAN网络结构</p>
-<p>【实施】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203507_260.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>【优劣】：</p>
-<ul>
-<li>KD需要样本少，但是通常不能保证学生网络的效果达到教师网络的程度；</li>
-<li>NaGAN需要样本大于KD，但是通常可以使得学生网络效果和教师网络差不多。</li>
-</ul>
-<p>思路2： <strong>【KDGAN】：</strong></p>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203507_710.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图10，KDGAN网络结构</p>
-<p>【实施】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203508_996.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>【训练过程】：</p>
-<ul>
-<li>训练D：固定T和S，最大化似然函数。D更新时，希望将真实样本的标签判别为1；将C和T生成的标签判别为0，因此最大化D更新的损失函数；</li>
-<li>训练T：固定D和S，最小化损失函数。损失函数分为两部分，第一部分为判别器D对于T生成的标签真实性的判别，T希望D判别的概率越小越好；第二部分为蒸馏Loss，T网络去拟合S网络输出的软目标；</li>
-<li>训练S：固定D和T，最小化损失函数。损失函数分为两部分，第一部分为判别器D对于S生成的标签真实性的判别，S希望D判别的概率越小越好；第二部分为蒸馏Loss，S网络去拟合T网络输出的软目标。</li>
-</ul>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203508_203.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>迭代对抗训练。</p>
-<p>2-4-2 《Ranking Distillation: Learning Compact Ranking Models With High Performance for Recommender System》</p>
-<p>【Meta info】：KDD 2018，Cites: 12</p>
-<p>【背景】：</p>
-<ul>
-<li>检索系统或者推荐系统中模型庞大，可以用蒸馏网络的方式提升工程效率；</li>
-<li>目标是给一个query，预测检索系统的Top K相关的doc。</li>
-</ul>
-<p>【思路】：</p>
-<ul>
-<li>第一阶段训练教师网络，对于每个query预测Top K相关doc，补充为学生网络的Ground truth信息；</li>
-<li>第二阶段教师网络的Top K作为正例加到学生网络中一起进行训练，使得学生网络和教师网络的预测结果更像。</li>
-</ul>
-<p>【Loss】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203508_562.png" alt="一文总览知识蒸馏概述"></p>
-<p>w_r为每条教师网络中预测的样本的权重，有两种方式生成：</p>
-<ul>
-<li>对位置进行加权（即，Top 1到K的顺序）；</li>
-<li>对排序相关性进行加权（考虑教师网络预测的的Item与query的相关性程度）。</li>
-</ul>
-<p>【网络结构】：</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203508_991.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>图11，Ranking Distillation网络结构</p>
-<p>Discussion</p>
-<p>简单回顾一下，把复杂模型或者多个模型Ensemble（Teacher）学到的知识→ 迁移到另一个轻量级模型（ Student ）上叫知识蒸馏；。知识蒸馏属于模型压缩、加速的一类，要求在模型变轻量的同时（方便部署），尽量不损失性能；后来也应用于模型表现的提升。</p>
-<p>按照迁移知识的类型大致可以分为三大类：</p>
-<ul>
-<li>Output Transfer——将网络的输出——Soft-target作为知识；</li>
-<li>Feature Transfer——将网络学习的特征作为知识；</li>
-<li>Relation Transfer——将网络或者样本的关系作为知识。</li>
-</ul>
-<p>知识蒸馏提升了模型的工程表现，相对于其他模型压缩方式，如模型Int8而言，KD给了我们更多的想象空间，毕竟如DML等训练方式，可能在一定程度上提升模型的效果。</p>
-<p>最后是一些Take Home Messages~</p>
-<p><img src="https://img.ctolib.com/uploadImg/20191228/20191228203508_926.jpg" alt="一文总览知识蒸馏概述"></p>
-<p>以上就是《知识蒸馏简述》的全部内容如果大家觉得有帮助，可以帮忙点个赞或者收藏一下，这将是我继续分享的动力~</p>
+</ol>
+<p>至于T在实际训练时候的取值，这还比较玄学，T取值小，那就忽略了小的zi所携带的信息；T取值大一点，那就放大了小的zi所携带的信息（但这些信息，也可能是噪音）。 Which of these effects dominates is an <strong>empirical question</strong>。但是从经验上来说，当小模型相对于大模型和任务来说非常非常小的时候，取一个适中（偏小）的温度T效果最好。</p>
+<p>总结</p>
+<p>Hinton首次提出知识蒸馏这个概念并且引入了温度系数来进行操作。知识蒸馏可以作为模型加速和压缩的方法用。本文重点结合原始论文讲了知识蒸馏的来龙去脉和提出思路，后面简要介绍了知识蒸馏的大致过程。具体在操作中还有一些细节（例如温度的选择，数据集的选择）没有涉及很深入，需要在具体应用时再去深入看。</p>
 
             </div>
 
