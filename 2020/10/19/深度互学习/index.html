@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/logo_miccall.png"/>
+	<link rel="shortcut icon" href="/img/logo_miccall.png">
+	
+			    <title>
+    wss's Blog
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    <meta name="keywords" content="miccall" />
+    
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+    <style type="text/css">
+        body:before {
+          content: ' ';
+          position: fixed;
+          top: 0;
+          background: url('/img/bg.jpg') center 0 no-repeat;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-size: cover; 
+        }
+    </style>
+
+			    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script async type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_coy.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">WSS' Blog</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">主页</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">分类</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li><a class="category-link" href="/categories/%E5%BF%83%E6%83%85/">心情</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/about/" title="简历">
+		                简历
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/group/" title="团队">
+		                团队
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/gallery/" title="图库">
+		                图库
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/tag/" title="标签">
+		                标签
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+                    
+                    <li>
+                        <a title="github" href="https://github.com/miccall" target="_blank" rel="noopener">
+                            <i class="icon fa fa-github"></i>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a title="500px" href="http://500px.com" target="_blank" rel="noopener">
+                            <i class="icon fa fa-500px"></i>
+                        </a>
+                    </li>
+                    
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://s1.ax1x.com/2020/10/19/0xsa5Q.md.png);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >深度互学习</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <p><strong>1.研究背景</strong></p>
+<p>近几年来，深度神经网络在计算机视觉、语音识别、语言翻译等领域中取得了令人瞩目的成果，为了完成更加复杂的信息处理任务，网络在设计上不断增加深度或宽度，使得模型参数量越来越大，如经典的VGG、Inception、ResNet系列网络。尽管更深或更宽的神经网络取得了更好的性能，大量计算需求使得它们难以部署在资源条件有限的环境中，如手机、平板、车载等移动端应用。这促使研究者们采用各种各样的方法去探索更高效的模型，如更精巧的网络结构设计MobileNet和ShuffleNet，还有网络压缩、剪枝、二值化，以及比较有趣的模型蒸馏等。</p>
+<p>模型蒸馏算法由Hinton等人在2015年提出，利用一个预训练好的大网络当作教师来提供小网络额外的知识即平滑后的概率估计，实验表明小网络通过模仿大网络估计的类别概率，优化过程变得更容易，且表现出与大网络相近甚至更好的性能。然而模型蒸馏算法需要有提前预训练好的大网络，且大网络在学习过程中保持固定，仅对小网络进行单向的知识传递，难以从小网络的学习状态中得到反馈信息来对训练过程进行优化调整。</p>
+<p>文章尝试探索一种能够学习到更强大小网络的训练机制—深度互学习，即采用多个网络同时进行训练，每个网络在训练过程中不仅接受来自真值标记的监督，还参考同伴网络的学习经验来进一步提升泛化能力。在整个过程中，两个网络之间不断分享学习经验，实现互相学习共同进步。</p>
+<p><strong>2.算法框架</strong></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/0xsa5Q"><img src="https://s1.ax1x.com/2020/10/19/0xsa5Q.md.png" alt="0xsa5Q.md.png"></a></p>
+<p>图1 深度互学习算法框架</p>
+<p>具体来说，每个网络在学习过程中有两个损失函数，一个是传统的监督损失函数，采用交叉熵损失来度量网络预测的目标类别与真实标签之间的差异，另一个是网络间的交互损失函数，采用KL散度来度量两个网络预测概率分布之间的差异。公式表示为</p>
+<p><img src="https://s1.ax1x.com/2020/10/19/0x629J.png" alt="0x629J.png"><img src="https://s1.ax1x.com/2020/10/19/0xsYb8.png" alt="0xsYb8.png"></p>
+<p>采用这两种损失函数，不仅可以使得网络学习到如何区分不同的类别，还能够使其参考另一个网络的概率估计来提升自身泛化能力。</p>
+<p>对于单块GPU，我们采用交替迭代的方式依次更新两个网络，当有多块GPU时，我们可以采用分布式训练，每次迭代时两个网络同时计算概率估计差异并更新模型参数。实验发现分布式训练可以获得更好的性能。目前关于分布式训练为何能比串行训练获得更好的性能还未有比较好的理论解释，一些研究者认为在分布式训练中每个worker对附近参数空间的探索实际上提高了模型在连续梯度下降方面的统计性能。</p>
+<p>互学习算法也很容易扩展到多网络学习和半监督学习场景中。当有K个网络时，深度互学习学习每个网络时将其余K-1个网络分别作为教师来提供学习经验。另外一种策略是将其余K-1个网络融合后得到一个教师来提供学习经验 。在半监督互学习场景中，文章对有标签的数据计算监督损失和交互损失，而针对无标签数据我们仅计算交互损失来帮助网络从训练数据中挖掘更多有用信息。</p>
+<p><strong>3.实验结果</strong></p>
+<p>首先在CIFAR-10和CIFAR-100上用不同的网络做了实验，从表中可以看出，所有不同的网络组合采用深度互学习算法均可以提升分类准确率，这表明了互学习算法具有较高的灵活性，对网络结构的适应性较强。一般来说小网络从互学习训练中获益更多，比如Resnet-32和MobileNet。尽管WRN-28-10网络参数量很大，与其它网络进行互学习训练依然可以获得性能提升。因此，不同于模型蒸馏算法需要预训练大网络来帮助小网络提升性能，深度互学习算法也可以帮助参与训练的大网络来提升其性能。</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/0xsUUg"><img src="https://s1.ax1x.com/2020/10/19/0xsUUg.md.png" alt="0xsUUg.md.png"></a></p>
+<p>表1 数据集CIFAR-10与CIFAR-100实验结果</p>
+<p>文章在ImageNet上也做了实验，从图2中可以看出采用互学习训练均可以提升网络在大规模分类任务上的性能。</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/0xswCj"><img src="https://s1.ax1x.com/2020/10/19/0xswCj.md.png" alt="0xswCj.md.png"></a></p>
+<p>图2 ImageNet实验结果</p>
+<p>针对多网络互学习，从图3可以看出增加网络数量可以提升互学习策略下的单个网络性能，这说明更多教师网络提供了更多学习经验，帮助网络学习到更好的特征。另一方面，多网络互学习中多个独立教师（DML）的性能会优于融合教师（DML_e），这说明多个不同教师网络可以提供更多样化的学习经验，<a target="_blank" rel="noopener" href="https://imgchr.com/i/0xs08s"><img src="https://s1.ax1x.com/2020/10/19/0xs08s.png" alt="0xs08s.png"></a></p>
+<p>图3 多网络互学习实验结果</p>
+<p>针对半监督学习，从图4中可以看出，仅采用有标签数据参与训练时，深度互学习策略可以提高算法分类准确率。而当我们将未标记数据加入互学习训练中，网络的性能可以得到进一步提升，当标记样本数量较少时，其优势更明显。</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/0xsB2n"><img src="https://s1.ax1x.com/2020/10/19/0xsB2n.png" alt="0xsB2n.png"></a></p>
+<p>图4 半监督深度互学习实验结果</p>
+<p><strong>4.作用机制</strong></p>
+<p>那么，为什么互学习机制能起作用呢？为什么网络从头开始互学习训练也能收敛到更好的解而不是被互相拉低？当两个网络均从头开始训练时额外的知识从哪里来？为什么约束两个网络的概率估计相近可以提升泛化能力？经过互学习训练后两个网络是不是更相似了？</p>
+<p>首先，为什么网络从头开始互学习训练也能收敛到更好的解而不是被互相拉低？直观解释如下：每个网络一开始采用随机初始化，类别概率估计接近于均匀分布，这使得它们在训练初期的监督损失较大，交互损失较小，每个网络主要由传统的监督损失函数引导，这样可以保证网络的性能在逐渐提升。随着模型参数更新，每个网络在自己的学习过程中获得不同的知识，它们对样本类别的概率估计也会有所不同，这时交互损失开始促进网络互相参考学习经验。</p>
+<p>接下来是最关键的问题，<strong>为什么互学习机制起作用？当两个网络均从头开始训练时额外的知识从哪里来？为什么约束两个网络的概率估计相近可以提升泛化能力？</strong>可以从以下几个角度来尝试理解这些问题。</p>
+<p>首先文章认为类别概率估计蕴含了网络挖掘到的数据本质规律。网络的泛化能力越强，则表示网络越有可能挖掘到了数据的内在本质特性，并可以通过类别概率估计表现出来。例如网络学习区分猫、狗、桌子三个类别，如图5所示，网络在对猫进行分类时除了要最大化猫的类别概率估计，还会给错误类别如狗和桌子分配一定概率，尽管该概率值很低，但我们肯定希望分配给狗的概率要大于分配给桌子的概率，即希望网络除了学习到猫的特征，还能学习到和狗共有的一些特征，认为猫与狗的类别距离要小于猫与桌子的类别距离。这样网络在新的测试数据上就更有可能捕捉猫的多种特性，表现出较强的泛化能力。真值标签提供的信息仅包含样本是否属于某一类，但缺少不同类别之间的联系，而网络输出的类别概率估计则能够在一定程度上恢复该信息，因此网络之间进行类别概率估计交互可以传递学习到的数据分布特性，从而帮助网络改善泛化性能。</p>
+<p>最后，文章认为网络在训练过程中会参考同伴网络的经验来调整自己的学习过程，最终能够收敛到一个更平缓的极小值点，从而具备更好的泛化性能。关于神经网络泛化性能的一些研究认为，尽管深度神经网络可以找到很多解（即网络学习到的参数）使得训练损失降到零，但一些解能够比其它解具有更好的泛化性能，其原因在于这些解处于更平缓的极小点，这意味着小的波动不会对网络的预测结果造成剧烈影响。</p>
+<p>那么深度互学习算法是不是帮助网络找到了一个更平缓的极小点呢？首先从图（a）可以看出单独训练及互学习训练的网络都可以充分拟合训练数据，训练集上的分类准确率都可以达到100%，且训练损失都可以降到几乎相同的极小值。这说明深度互学习算法并没有帮助网络找一个更深的极小值点来帮助网络在训练集上实现损失更小，而是有可能找到了一个深度相同但更平缓的极小值点。</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/0xsDvq"><img src="https://s1.ax1x.com/2020/10/19/0xsDvq.md.png" alt="0xsDvq.md.png"></a></p>
+<p>图5 深度互学习作用机制分析</p>
+<p>为了验证该猜想，文章对两种策略训练好的网络参数添加高斯噪声，并在图（b）中比较了添加不同方差高斯噪声后网络损失函数值的变化。从图中可以看出，单独训练的网络在添加噪声后损失函数值波动很大，而互学习训练网络的损失函数值则增加很小。该实验现象表明深度互学习算法帮助网络找到了一个更平缓的极小点，针对噪声具有更强的鲁棒性，从而证明了深度互学习模型相较于独立模型具有更好的泛化性能。</p>
+<p><strong>5.总结</strong></p>
+<p><strong>经典蒸馏模型</strong>：需要有提前预训练好的大网络，且大网络在学习过程中保持固定，仅对小网络进行单向的知识传递，难以从小网络的学习状态中得到反馈信息来对训练过程进行优化调整</p>
+<p><strong>深度相互学习</strong>：剥离了教师，学生网络的概念，由一组简单的学生网络组成，这些学生网络互为教师和学生，互相学习。通过采用两个网络联合训练来提升深度神经网络的泛化性能。该算法不仅可以用于训练高效的小网络，也可以进一步提升大网络性能。</p>
+<p>打个比方，在经典蒸馏模型中，尽管教师知识渊博，但只是向学生进行单向的知识传递，学生不会向教师进行知识的反馈，所以学习过程中教师无法利用到学生在学习过程中学到的信息对训练过程进行调整优化。而在深度互学习中，多个小白学生，按照正确的教材进行学习，在学习过程中，学生们相互学习，分享自己学到的知识，或者说每个学生都能学习到其他学生所产生的思想的火花，又因为有正确教材的指导，所以不会出现瞎子带瞎子的局面！因此深度互学习效果要比经典知识蒸馏模型性能更好！</p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://example.com/2020/10/19/%E6%B7%B1%E5%BA%A6%E4%BA%92%E5%AD%A6%E4%B9%A0/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2020/10/19/%E6%B7%B1%E5%BA%A6%E4%BA%92%E5%AD%A6%E4%B9%A0/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a target="_blank" rel="noopener" href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+				<span id="busuanzi_container_site_pv"> 2020 </span> 
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
